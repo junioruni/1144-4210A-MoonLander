@@ -12,6 +12,7 @@ namespace JuniorUni.MoonLander
         SpriteBatch spriteBatch;
         SchiffBildContainer schiffBildContainer;
         BlockBildContainer blockBildContainer;
+        BlockBildContainer blockBild2Container;
 
         SpriteFont bildSchrift;
         Texture2D platzhalterTextur;
@@ -36,6 +37,7 @@ namespace JuniorUni.MoonLander
             
             schiffBildContainer = new SchiffBildContainer(spriteBatch, Content);
             blockBildContainer = new BlockBildContainer(spriteBatch, Content);
+            blockBild2Container = new BlockBildContainer(spriteBatch, Content, 500, 200);
 
             #region TODO
             bildSchrift = Content.Load<SpriteFont>("Courier New");
@@ -55,9 +57,15 @@ namespace JuniorUni.MoonLander
         {
             // Tastatur fragen, was gerade alles gedrückt wird.
             var tastaturStatus = Keyboard.GetState();
-            
+
+
+            List<Rectangle> listeAllerBloecke = new List<Rectangle>();
+            listeAllerBloecke.Add(blockBildContainer.HoleRahmenVonBlockBild());
+            listeAllerBloecke.Add(blockBild2Container.HoleRahmenVonBlockBild());
+
+
             // Update der tastatur an den Schiffs-Container schicken.
-            schiffBildContainer.ReagiereAufTasten(tastaturStatus, blockBildContainer.HoleRahmenVonBlockBild());
+            schiffBildContainer.ReagiereAufTasten(tastaturStatus, listeAllerBloecke);
 
 
             base.Update(gameTime);
@@ -70,6 +78,7 @@ namespace JuniorUni.MoonLander
             // Dem Schiffs-Container sagen, dass er das Schiff auf die Leinwand malen soll.
             schiffBildContainer.ZeichneSchiff();
             blockBildContainer.ZeichneBlock();
+            blockBild2Container.ZeichneBlock();
             
             #region TODO
             // TODO: Textausgabe

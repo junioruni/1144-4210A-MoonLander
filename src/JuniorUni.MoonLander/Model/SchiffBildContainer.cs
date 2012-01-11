@@ -26,7 +26,7 @@ namespace JuniorUni.MoonLander.Model
             schiffsBild = c.Load<Texture2D>("Spaceship");
         }
 
-        public void ReagiereAufTasten(KeyboardState tastaturStatus, Rectangle blockRectangle)
+        public void ReagiereAufTasten(KeyboardState tastaturStatus, List<Rectangle> listeAllerBloecke)
         {
             // Wir nehmen die aktuellen Koordinaten als Basis.
             var newX = x;
@@ -44,12 +44,28 @@ namespace JuniorUni.MoonLander.Model
 
             // Immer einen kleineren Wert als die Steuerung auf y addieren, um eine Schwerkraft zu simulieren.
             newY += 3;
-            
-            if (HoleRahmenVonSchiffBild().Intersects(blockRectangle))
+
+
+            var aktuelleSchiffsPosition = HoleRahmenVonSchiffBild();
+            foreach (var einzelnerBlock in listeAllerBloecke)
             {
-                newX = 100;
-                newY = 100;
+                if (aktuelleSchiffsPosition.Intersects(einzelnerBlock))
+                {
+                    if (!tastaturStatus.IsKeyDown(Keys.Up))
+                    {
+                        if (aktuelleSchiffsPosition.Bottom - 5 < einzelnerBlock.Top)
+                        {
+                            newY = y;
+                        }
+                        else
+                        {
+                            newX = 100;
+                            newY = 100;
+                        }
+                    }
+                }
             }
+
 
             // Erst am Ende der Update Funktion ändern wir die aktuelle Position.
             x = newX;
