@@ -50,6 +50,58 @@
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Explosion\Spaceship_Explosion1.png">
+      <Name>Spaceship_Explosion1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Explosion\Spaceship_Explosion10.png">
+      <Name>Spaceship_Explosion10</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Explosion\Spaceship_Explosion2.png">
+      <Name>Spaceship_Explosion2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Explosion\Spaceship_Explosion3.png">
+      <Name>Spaceship_Explosion3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Explosion\Spaceship_Explosion4.png">
+      <Name>Spaceship_Explosion4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Explosion\Spaceship_Explosion5.png">
+      <Name>Spaceship_Explosion5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Explosion\Spaceship_Explosion6.png">
+      <Name>Spaceship_Explosion6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Explosion\Spaceship_Explosion7.png">
+      <Name>Spaceship_Explosion7</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Explosion\Spaceship_Explosion8.png">
+      <Name>Spaceship_Explosion8</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Explosion\Spaceship_Explosion9.png">
+      <Name>Spaceship_Explosion9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

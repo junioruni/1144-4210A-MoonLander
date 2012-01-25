@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,6 +12,7 @@ namespace JuniorUni.MoonLander
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SchiffBildContainer schiffBildContainer;
+        SchiffBildContainer schiffBild2Container;
         BlockBildContainer blockBildContainer;
         BlockBildContainer blockBild2Container;
 
@@ -35,8 +37,9 @@ namespace JuniorUni.MoonLander
             // Zeichenbrett, dass wir zur Ausgabe der 2D-Grafiken verwenden.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
-            schiffBildContainer = new SchiffBildContainer(spriteBatch, Content);
-            blockBildContainer = new BlockBildContainer(spriteBatch, Content);
+            schiffBildContainer = new SchiffBildContainer(spriteBatch, graphics, Content, 100, 100, new SteuerungsConfig() { Links = Keys.A, Rauf = Keys.W, Rechts = Keys.D, Runter = Keys.S  });
+            schiffBild2Container = new SchiffBildContainer(spriteBatch, graphics, Content, 600, 100, new SteuerungsConfig() { Links = Keys.Left, Rauf = Keys.Up, Rechts = Keys.Right, Runter = Keys.Down });
+            blockBildContainer = new BlockBildContainer(spriteBatch, Content, 300, 300);
             blockBild2Container = new BlockBildContainer(spriteBatch, Content, 500, 200);
 
             #region TODO
@@ -59,6 +62,7 @@ namespace JuniorUni.MoonLander
             var tastaturStatus = Keyboard.GetState();
 
 
+            // Ich erstelle eine Liste von Rechtecken und packe die Koordinaten meiner beiden Blöcke in die Liste, um dem SchiffsContainer sie zum Vergleichen zu übergeben.
             List<Rectangle> listeAllerBloecke = new List<Rectangle>();
             listeAllerBloecke.Add(blockBildContainer.HoleRahmenVonBlockBild());
             listeAllerBloecke.Add(blockBild2Container.HoleRahmenVonBlockBild());
@@ -66,6 +70,14 @@ namespace JuniorUni.MoonLander
 
             // Update der tastatur an den Schiffs-Container schicken.
             schiffBildContainer.ReagiereAufTasten(tastaturStatus, listeAllerBloecke);
+            schiffBild2Container.ReagiereAufTasten(tastaturStatus, listeAllerBloecke);
+
+
+            if (schiffBildContainer.HoleRahmenVonSchiffBild().Intersects(schiffBild2Container.HoleRahmenVonSchiffBild()))
+            {
+                schiffBildContainer.Explodiere();
+                schiffBild2Container.Explodiere();
+            }
 
 
             base.Update(gameTime);
@@ -77,16 +89,21 @@ namespace JuniorUni.MoonLander
 
             // Dem Schiffs-Container sagen, dass er das Schiff auf die Leinwand malen soll.
             schiffBildContainer.ZeichneSchiff();
+            schiffBild2Container.ZeichneSchiff();
             blockBildContainer.ZeichneBlock();
             blockBild2Container.ZeichneBlock();
             
             #region TODO
             // TODO: Textausgabe
             spriteBatch.Begin();
-            spriteBatch.DrawString(bildSchrift, "Punkte: 0", new Vector2(20, 20), Color.White);
+            spriteBatch.DrawString(bildSchrift, "Punkte: " + schiffBildContainer.Landungen + " | " + schiffBild2Container.Landungen, new Vector2(20, 20), Color.White);
 
             // TODO: Rechteck malen
-            spriteBatch.Draw(platzhalterTextur, new Rectangle(10, 10, 5, 300), Color.White);
+            spriteBatch.Draw(platzhalterTextur, new Rectangle(3, 30, 10, 304), Color.White);
+            spriteBatch.Draw(platzhalterTextur, new Rectangle(5, 32, 6, (int)Math.Floor(300 / 100 * schiffBildContainer.Treibstoff)), Color.Green);
+
+            spriteBatch.Draw(platzhalterTextur, new Rectangle(graphics.PreferredBackBufferWidth - 20, 30, 10, 304), Color.White);
+            spriteBatch.Draw(platzhalterTextur, new Rectangle(graphics.PreferredBackBufferWidth - 18, 32, 6, (int)Math.Floor(300 / 100 * schiffBild2Container.Treibstoff)), Color.Green);
             spriteBatch.End();
             #endregion
 
